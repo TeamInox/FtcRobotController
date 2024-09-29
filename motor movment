@@ -1,0 +1,46 @@
+package org.first inspires.ftc.team code;
+
+import com.qualcomm.robotcore.event loop.opcode.OpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
+
+// Define your OpMode class
+public class MyRobotOpMode extends OpMode {
+
+    // Declare hardware variables
+    private DcMotor leftMotor;
+    private DcMotor rightMotor;
+    private Servo armServo;
+
+    @Override
+    public void init() {
+        // Initialize hardware variables
+        leftMotor = hardwareMap.get(DcMotor.class, "left_motor");
+        rightMotor = hardwareMap.get(DcMotor.class, "right_motor");
+        armServo = hardwareMap.get(Servo.class, "arm_servo");
+
+        // Set motor directions
+        leftMotor.setDirection(DcMotor.Direction.FORWARD);
+        rightMotor.setDirection(DcMotor.Direction.REVERSE);
+
+        // Initialize servo position
+        armServo.setPosition(0.5);
+    }
+
+    @Override
+    public void loop() {
+        // Control motors based on gamepad input
+        double leftPower = -gamepad1.left_stick_y;
+        double rightPower = -gamepad1.right_stick_y;
+
+        leftMotor.setPower(leftPower);
+        rightMotor.setPower(rightPower);
+
+        // Control servo based on gamepad input
+        if (gamepad1.a) {
+            armServo.setPosition(1.0);
+        } else if (gamepad1.b) {
+            armServo.setPosition(0.0);
+        }
+    }
+}
